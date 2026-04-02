@@ -132,7 +132,10 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie08_UnikalneMiastaStudentow()
     {
-        throw Niezaimplementowano(nameof(Zadanie08_UnikalneMiastaStudentow));
+        return DaneUczelni.Studenci
+            .OrderBy(e => e.Miasto)
+            .Select(e => e.Miasto)
+            .Distinct();
     }
 
     /// <summary>
@@ -147,7 +150,10 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie09_TrzyNajnowszeZapisy()
     {
-        throw Niezaimplementowano(nameof(Zadanie09_TrzyNajnowszeZapisy));
+        return DaneUczelni.Zapisy
+            .OrderByDescending(e => e.DataZapisu)
+            .Take(3)
+            .Select(e => $"{e.DataZapisu} {e.StudentId} {e.PrzedmiotId}");
     }
 
     /// <summary>
@@ -163,7 +169,11 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie10_DrugaStronaPrzedmiotow()
     {
-        throw Niezaimplementowano(nameof(Zadanie10_DrugaStronaPrzedmiotow));
+        return DaneUczelni.Przedmioty
+            .OrderBy(e => e.Nazwa)
+            .Skip(2)
+            .Take(2)
+            .Select(e => e.Nazwa + "-" + e.Kategoria);
     }
 
     /// <summary>
@@ -178,7 +188,11 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie11_PolaczStudentowIZapisy()
     {
-        throw Niezaimplementowano(nameof(Zadanie11_PolaczStudentowIZapisy));
+        return DaneUczelni.Studenci
+            .Join(DaneUczelni.Zapisy,
+                e => e.Id,
+                z => z.StudentId,
+                (e, z) => $"{e.Imie} {e.Nazwisko} {z.DataZapisu}");
     }
 
     /// <summary>
